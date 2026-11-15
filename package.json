@@ -1,16 +1,17 @@
 {
   "name": "dsh-astrbot-ingress",
-  "version": "0.3.25",
+  "version": "0.3.25+autoqq.1",
   "description": "HTTP ingress that lets AstrBot drive DeepSeek Harness agents (OneBot / official IM via AstrBot).",
+  "private": true,
   "license": "MIT",
   "author": "CCYellowStar2",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CCYellowStar2/dsh-astrbot-ingress.git"
+    "url": "git+https://github.com/redSkinDuck/dsh-astrbot-ingress.git"
   },
-  "homepage": "https://github.com/CCYellowStar2/dsh-astrbot-ingress#readme",
+  "homepage": "https://github.com/redSkinDuck/dsh-astrbot-ingress#readme",
   "bugs": {
-    "url": "https://github.com/CCYellowStar2/dsh-astrbot-ingress/issues"
+    "url": "https://github.com/redSkinDuck/dsh-astrbot-ingress/issues"
   },
   "type": "module",
   "main": "lib/index.js",

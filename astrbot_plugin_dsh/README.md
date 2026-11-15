@@ -7,7 +7,7 @@
 
 把 QQ / 其它 IM 里指定的对话转给本机 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)。AstrBot 继续当网关和日常人格，DSH 只在 `/dsh`（可改）接手写代码、跑工具。
 
-**本插件只是桥的一半，另一半是 DSH 侧的 [`dsh-astrbot-ingress`](https://github.com/CCYellowStar2/dsh-astrbot-ingress)，不装它连不上。**
+**本插件只是桥的一半，另一半是 DSH 侧的 [`dsh-astrbot-ingress`](https://github.com/redSkinDuck/dsh-astrbot-ingress)，不装它连不上。**
 它跑在 DSH 进程里，把会话事件 / 审批 / 提问推给本插件，并在 `~/.dsh/astrbot-ingress.json` 写下实际端口与 token 供本插件自动发现。
 
 ```
@@ -22,7 +22,7 @@ QQ ──OneBot──▶ AstrBot（本插件）──HTTP──▶ DSH :3188 ─
 
 ## 快速开始（只填一个 `token`）
 
-1. DSH 侧装好 [`dsh-astrbot-ingress`](https://github.com/CCYellowStar2/dsh-astrbot-ingress) 并重启 `dsh web`。
+1. DSH 侧装好 [`dsh-astrbot-ingress`](https://github.com/redSkinDuck/dsh-astrbot-ingress) 并重启 `dsh web`。
 2. 本插件装好后**重载**。
 3. 只填 `token`：抄 `%DSH_HOME%/dsh-astrbot-ingress/config.json` 里的那段，粘进本插件的 `token`。
    （AstrBot 与 DSH 同一台机器时可以**留空** —— 插件会读 `%DSH_HOME%/astrbot-ingress.json` 信标。）
@@ -42,11 +42,7 @@ QQ ──OneBot──▶ AstrBot（本插件）──HTTP──▶ DSH :3188 ─
 
 ## 安装
 
-**方式一：AstrBot 插件市场**（推荐）——在 AstrBot WebUI 的插件市场搜索 `dsh` 或「DSH 桥」一键安装
-（市场页面：<https://cloud.astrbot.app/market>）。
-
-**方式二：填仓库地址** —— 在 AstrBot WebUI 的插件页填 `https://github.com/CCYellowStar2/astrbot_plugin_dsh`，
-或把整个 `astrbot_plugin_dsh` 文件夹放进 AstrBot 的 `data/plugins/`。
+在[个人发行页](https://github.com/redSkinDuck/dsh-astrbot-ingress/releases)下载与 DSH 侧同版本的 `astrbot_plugin_dsh.zip`，通过 AstrBot WebUI 的插件页上传。后续升级同样使用发行包。
 
 装完重载 **DSH 桥**。同机部署**什么都不用填**：DSH 里的 ingress 插件会把端口和 token 写进
 `~/.dsh/astrbot-ingress.json`，本插件自动读。容器部署（AstrBot 在 Docker 里）看不到那个文件，

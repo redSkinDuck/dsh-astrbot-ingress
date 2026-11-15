@@ -1,5 +1,7 @@
 # dsh-astrbot-ingress
 
+AutoQQ 个人维护版，由 redSkinDuck 基于 [CCYellowStar2/dsh-astrbot-ingress](https://github.com/CCYellowStar2/dsh-astrbot-ingress) 维护，沿用 [MIT 许可证](LICENSE)。[个人发行页](https://github.com/redSkinDuck/dsh-astrbot-ingress/releases) 提供同一提交的 DSH 和 AstrBot 安装包。
+
 > HTTP ingress that lets [AstrBot](https://astrbot.app/) drive a local
 > [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) agent:
 > AstrBot stays the IM gateway, DSH does the coding.
@@ -15,13 +17,12 @@ QQ / NapCat ──OneBot──▶ AstrBot ──HTTP──▶ 本插件 :3188 �
 ## 快速开始（只有一个必填项）
 
 ```bash
-# ① DSH 侧
-dsh plugin --profile web add github:CCYellowStar2/dsh-astrbot-ingress
+# ① 从个人发行页下载下列 tgz，在下载目录执行
+dsh plugin --profile web add ./dsh-astrbot-ingress-0.3.25-autoqq.1.tgz
 # 重启 dsh web；控制台出现 "listening on http://127.0.0.1:3188" 即成功
 ```
 
-② AstrBot 侧装 [`astrbot_plugin_dsh`](https://github.com/CCYellowStar2/astrbot_plugin_dsh)
-（WebUI 插件页填仓库地址，或在插件市场搜「DSH 桥」），重载插件。
+② 从[同一发行页](https://github.com/redSkinDuck/dsh-astrbot-ingress/releases/tag/autoqq-1)下载 `astrbot_plugin_dsh.zip`，在 AstrBot WebUI 的插件页上传并重载。
 
 ③ **唯一要填的配置是 `token`**：抄 `%DSH_HOME%/dsh-astrbot-ingress/config.json` 里的那段，粘进
 AstrBot 插件配置的 `token`。（AstrBot 与 DSH 同一台机器时**连这个都能留空** —— 插件会读
@@ -55,15 +56,8 @@ services:
 ### 1. DSH 侧插件
 
 ```bash
-# npm（推荐：预构建产物，不用为构建脚本额外授权）
-dsh plugin --profile web add dsh-astrbot-ingress
-
-# 或从 GitHub 直接装（plugin add 转发给 pnpm，支持 github: / git+https: / 本地路径）
-dsh plugin --profile web add github:CCYellowStar2/dsh-astrbot-ingress
-
-# 或先 clone，再装本地目录
-git clone https://github.com/CCYellowStar2/dsh-astrbot-ingress
-dsh plugin --profile web add ./dsh-astrbot-ingress
+# 从个人发行页下载后安装
+dsh plugin --profile web add ./dsh-astrbot-ingress-0.3.25-autoqq.1.tgz
 ```
 
 重启 `dsh web`，控制台应出现：
@@ -78,10 +72,9 @@ Token 写在 `%DSH_HOME%/dsh-astrbot-ingress/config.json`（Linux/macOS 通常�
 
 ### 2. AstrBot 侧插件
 
-把 `astrbot_plugin_dsh/` 拷进 AstrBot 的 `data/plugins/`（或在 AstrBot WebUI 的插件页用仓库地址
-`https://github.com/CCYellowStar2/astrbot_plugin_dsh` 安装），再重载插件。**同机**：`ingress_url` 与
+从同一发行页下载 `astrbot_plugin_dsh.zip`，在 AstrBot WebUI 上传并重载。**同机**：`ingress_url` 与
 `token` 留空即可（自动读上面的信标文件）；**AstrBot 在容器里**：填 `http://host.docker.internal:3188`
-与手抄的 token。插件自身的说明见 [`astrbot_plugin_dsh`](https://github.com/CCYellowStar2/astrbot_plugin_dsh)。
+与手抄的 token。插件自身的说明见 [`astrbot_plugin_dsh`](astrbot_plugin_dsh/README.md)。
 
 ## 配置
 
@@ -166,7 +159,7 @@ services:
       - ./napcat-data:/app/napcat/data   # 与 AstrBot 完全相同的挂载点
 ```
 
-容器里若设了 `HTTP_PROXY`，插件会 `trust_env=False` 直连，避免被代理成 502。完整的部署对照表见 [`astrbot_plugin_dsh`](https://github.com/CCYellowStar2/astrbot_plugin_dsh#部署与共享目录)。
+容器里若设了 `HTTP_PROXY`，插件会 `trust_env=False` 直连，避免被代理成 502。完整的部署对照表见 [`astrbot_plugin_dsh`](astrbot_plugin_dsh/README.md#部署与共享目录)。
 
 ## 用法
 
@@ -212,7 +205,7 @@ DSH 反问（`ask_user_question`，含 plan 模式的计划确认）也会发到
 npm test        # node:test，跑 lib/pure.js 的纯函数单测
 ```
 
-纯逻辑（分块、`[SEND_FILE]` 解析、消息抽取、路径校验、过程汇报文案）全在 `lib/pure.js`，与 cordis / 宿主无关，可直接单测；`lib/index.js` 只放插件装配与 I/O。改动记录见 [CHANGELOG.md](https://github.com/CCYellowStar2/dsh-astrbot-ingress/blob/main/CHANGELOG.md)，实现取舍与排障笔记见 [docs/design-notes.md](https://github.com/CCYellowStar2/dsh-astrbot-ingress/blob/main/docs/design-notes.md)。
+纯逻辑（分块、`[SEND_FILE]` 解析、消息抽取、路径校验、过程汇报文案）全在 `lib/pure.js`，与 cordis / 宿主无关，可直接单测；`lib/index.js` 只放插件装配与 I/O。改动记录见 [CHANGELOG.md](CHANGELOG.md)，实现取舍与排障笔记见 [docs/design-notes.md](docs/design-notes.md)。
 
 ## 技能
 
